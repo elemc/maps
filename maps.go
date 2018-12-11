@@ -89,6 +89,30 @@ func (m *Map) UnmarshalJSON(data []byte) (err error) {
 	return json.Unmarshal(data, &m.data)
 }
 
+// GetFloat64 - возвращает значение по ключу, как float 64-битное
+func (m *Map) GetFloat64(key string) float64 {
+	value := m.Get(key)
+	if value == nil {
+		return 0
+	}
+	switch v := value.(type) {
+	case float64:
+		return v
+	case int:
+		return float64(v)
+	case int64:
+		return float64(v)
+	case string:
+		i, err := strconv.ParseFloat(v, 64)
+		if err != nil {
+			return 0
+		}
+		return i
+	default:
+		return 0
+	}
+}
+
 // GetInt64 - возвращает значение по ключу, как целое 64-битное число
 func (m *Map) GetInt64(key string) int64 {
 	value := m.Get(key)
