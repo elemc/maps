@@ -5,8 +5,6 @@ import (
 	"strconv"
 	"sync"
 	"time"
-
-	"github.com/sirupsen/logrus"
 )
 
 // Map - тип данных, хеш-таблица со строковым ключем и интерфейсным значением
@@ -218,7 +216,6 @@ func (m *Map) GetTime(key string) time.Time {
 // GetJSTime - функция вернет целое число по ключу key, попытаясь превратить его во время, сперва
 func (m *Map) GetJSTime(key string) int64 {
 	t := m.GetTime(key)
-	logrus.Debugf("Get time returns: %s / %d", t, t.Unix()*1000)
 	return t.Unix() * 1000
 }
 
