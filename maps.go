@@ -126,10 +126,21 @@ func (m *Map) GetInt64(key string) int64 {
 		return int64(v)
 	case string:
 		i, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0
+		if err == nil {
+			return i
 		}
-		return i
+		bv, err := strconv.ParseBool(v)
+		if err == nil {
+			if bv {
+				return 1
+			}
+		}
+		return 0
+	case bool:
+		if v {
+			return 1
+		}
+		return 0
 	default:
 		return 0
 	}
@@ -150,10 +161,21 @@ func (m *Map) GetInt(key string) int {
 		return int(v)
 	case string:
 		i, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return 0
+		if err == nil {
+			return int(i)
 		}
-		return int(i)
+		bv, err := strconv.ParseBool(v)
+		if err == nil {
+			if bv {
+				return 1
+			}
+		}
+		return 0
+	case bool:
+		if v {
+			return 1
+		}
+		return 0
 	default:
 		return 0
 	}
