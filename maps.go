@@ -62,9 +62,21 @@ func (m *Map) Del(key string) {
 	m.Unlock()
 }
 
-// GetMap - функция создает копию данных в виде map[string]interface{} и возвращает ее
-func (m *Map) GetMap() *Map {
-	result := Copy(m.data)
+// GetMap - функция возвращает данные подчиненного ключа, как указатель на Map
+func (m *Map) GetMap(key string) *Map {
+	m.RLock()
+	value, ok := m.data[key]
+	m.RUnlock()
+
+	if !ok {
+		return nil
+	}
+	mapValue, ok := value.(map[string]interface{})
+	if !ok {
+		return nil
+	}
+
+	result := Copy(mapValue)
 	return result
 }
 
