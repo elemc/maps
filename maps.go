@@ -37,6 +37,9 @@ func (m *Map) Set(key string, value interface{}) {
 
 // AddMap - функция добавляет или затирает (в случае наличия) данные
 func (m *Map) AddMap(data map[string]interface{}) {
+	if data == nil {
+		return
+	}
 	for k, v := range data {
 		m.Lock()
 		m.data[k] = v
@@ -69,11 +72,11 @@ func (m *Map) GetMap(key string) *Map {
 	m.RUnlock()
 
 	if !ok {
-		return nil
+		return New()
 	}
 	mapValue, ok := value.(map[string]interface{})
 	if !ok {
-		return nil
+		return New()
 	}
 
 	result := Copy(mapValue)
