@@ -25,8 +25,8 @@ func testCreateMap() (err error) {
 
 	gmap.AddMap(someData)
 
-	if len(gmap.GetMap()) != 5 {
-		err = fmt.Errorf("unexpected map length: %d", len(gmap.GetMap()))
+	if gmap.GetMap().Length() != 5 {
+		err = fmt.Errorf("unexpected map length: %d", gmap.GetMap().Length())
 		return
 	}
 

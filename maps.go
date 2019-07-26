@@ -63,7 +63,12 @@ func (m *Map) Del(key string) {
 }
 
 // GetMap - функция создает копию данных в виде map[string]interface{} и возвращает ее
-func (m *Map) GetMap() map[string]interface{} {
+func (m *Map) GetMap() *Map {
+	result := Copy(m.data)
+	return result
+}
+
+func (m *Map) GetGoMap() map[string]interface{} {
 	result := make(map[string]interface{})
 	m.RLock()
 	for k, v := range m.data {
@@ -280,4 +285,11 @@ func (m *Map) GetBool(key string) bool {
 	default:
 		return false
 	}
+}
+
+// Length - возвращает размерность данных
+func (m *Map) Length() int {
+	m.RLock()
+	defer m.RUnlock()
+	return len(m.data)
 }
