@@ -83,6 +83,23 @@ func (m *Map) GetMap(key string) *Map {
 	return result
 }
 
+// GetStringSlice - функция возвращает слайс строк
+func (m *Map) GetStringSlice(key string) []string {
+	m.RLock()
+	value, ok := m.data[key]
+	m.RUnlock()
+
+	if !ok {
+		return []string{}
+	}
+
+	sValue, ok := value.([]string)
+	if !ok {
+		return []string{}
+	}
+	return sValue
+}
+
 func (m *Map) GetGoMap() map[string]interface{} {
 	result := make(map[string]interface{})
 	m.RLock()
