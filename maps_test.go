@@ -22,11 +22,12 @@ func testCreateMap() (err error) {
 	someData["test_int"] = "12345"
 	someData["test_str"] = "some string"
 	someData["test_time"] = "1979-09-24T05:35:00Z"
+	someData["test_string_slice"] = []string{"1", "2", "3", "q", "w", "e"}
 
 	gmap.AddMap(someData)
 
-	if gmap.GetMap().Length() != 5 {
-		err = fmt.Errorf("unexpected map length: %d", gmap.GetMap().Length())
+	if gmap.Length() != 6 {
+		err = fmt.Errorf("unexpected map length: %d", gmap.Length())
 		return
 	}
 
@@ -54,6 +55,9 @@ func testGetValues() (err error) {
 	}
 	if v := gmap.GetJSTime("test_time"); v != 306999300000 {
 		err = fmt.Errorf("unexpected JS time value: %d", v)
+	}
+	if v := gmap.GetStringSlice("test_string_slice"); len(v) != 6 {
+		err = fmt.Errorf("unexpected string slice size: %d", len(v))
 	}
 
 	return
